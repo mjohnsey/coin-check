@@ -62,7 +62,7 @@ export default class PriceCommand extends Command {
       config.ConfigToml.coinbase.secret)
 
     const parsedCrypto = KNOWN_CRYPTOS[cryptoName]
-    const symbol = parsedCrypto?.symbol || ''
+    const symbol = `${parsedCrypto?.symbol} ` || ''
     const name = parsedCrypto?.name || cryptoName
 
     const result = await PriceCommand.getResult(coinbaseStore, name, symbol)
