@@ -1,0 +1,10 @@
+[coinbase]
+key = "hello"
+passphrase = "goodbye"
+secret = "nothing to see here"
+
+[bigMoney]
+BTC = 25000
+LTC = 100
+ETH = 800
+symbol = "🤑"
