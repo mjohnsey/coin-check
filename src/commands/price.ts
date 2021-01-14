@@ -69,7 +69,7 @@ export default class PriceCommand extends Command {
     if (bigMoney) {
       result.isBigMoney = (config.ConfigToml.bigMoney &&
         config.ConfigToml.bigMoney[name] &&
-        result.currentPrice > config.ConfigToml.bigMoney[name])
+        _.toNumber(result.currentPrice) > config.ConfigToml.bigMoney[name])
     }
     switch (format) {
     case 'json': {
