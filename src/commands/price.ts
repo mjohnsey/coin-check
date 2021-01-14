@@ -41,12 +41,12 @@ export default class PriceCommand extends Command {
     const currentPrice = await coinbaseStore.getCurrentSpotPriceFiat(cryptoName)
     const balancePrice = totalBalance * currentPrice
     const result: any = {balance: totalBalance,
-      usdBalance: balancePrice,
+      usdBalance: balancePrice.toFixed(2),
       crypto: {
         name: cryptoName,
         symbol: cryptoSymbol,
       },
-      currentPrice}
+      currentPrice: currentPrice.toFixed(2)}
     return result
   }
 

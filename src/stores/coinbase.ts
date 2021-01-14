@@ -1,4 +1,5 @@
 import * as coinbase from 'coinbase-pro'
+import * as _ from 'lodash'
 
 export class CoinbaseStore {
   public client: any
@@ -12,12 +13,12 @@ export class CoinbaseStore {
     return accounts
   }
 
-  async getCurrentSpotPriceFiat(crypto: string, fiat = 'USD') {
+  async getCurrentSpotPriceFiat(crypto: string, fiat = 'USD'): Promise<number> {
     return this.getCurrentSpotPrice(`${crypto}-${fiat}`)
   }
 
-  async getCurrentSpotPrice(currencyPair: string) {
+  async getCurrentSpotPrice(currencyPair: string): Promise<number> {
     const ticker = await this.client.getProductTicker(currencyPair)
-    return ticker.price
+    return _.toNumber(ticker.price)
   }
 }
