@@ -34,19 +34,36 @@ export default class PriceCommand extends Command {
 
   static async getResult(coinbaseStore: CoinbaseStore, cryptoName: string, cryptoSymbol: string|undefined) {
     const accounts = await coinbaseStore.getCoinbaseAccounts()
+    
     const cryptoAccounts = _.filter(accounts, account => {
       return account.currency === cryptoName
     })
     const totalBalance = _.sumBy(cryptoAccounts, acct => acct.balance)
     const currentPrice = await coinbaseStore.getCurrentSpotPriceFiat(cryptoName)
     const balancePrice = totalBalance * currentPrice
+
     const result: any = {balance: totalBalance,
       usdBalance: balancePrice.toFixed(2),
       crypto: {
         name: cryptoName,
         symbol: cryptoSymbol,
       },
-      currentPrice: currentPrice.toFixed(2)}
+      currentPrice: currentPrice.toFixed(2),
+    }
+
+    const gdaxAccounts = await coinbaseStore.getGdaxAccounts()
+    const gdaxCryptoAccounts = _.filter(gdaxAccounts, account => account.currency === cryptoName)
+    if (gdaxCryptoAccounts.length > 0) {
+      const totalBalanceForAllGdaxAccounts = _.sumBy(gdaxCryptoAccounts, account => _.toNumber(account.available))
+      if (totalBalanceForAllGdaxAccounts > 0) {
+        const gdaxUsdBalance = (totalBalanceForAllGdaxAccounts * result.currentPrice).toFixed(2)
+        result.gdax = {balance: totalBalanceForAllGdaxAccounts, usdBalance: gdaxUsdBalance}
+        const totalHoldsForAllGdaxAccounts = _.sumBy(gdaxAccounts, account => _.toNumber(account.hold))
+        if (totalHoldsForAllGdaxAccounts > 0) {
+          result.gdax.hold = totalHoldsForAllGdaxAccounts
+        }
+      }
+    }
     return result
   }
 
@@ -66,6 +83,8 @@ export default class PriceCommand extends Command {
     const name = parsedCrypto?.name || cryptoName
 
     const result = await PriceCommand.getResult(coinbaseStore, name, symbol)
+    // TODO: add Coinbase status check https://coinbase.statuspage.io/api/v2/summary.json
+    // https://www.npmjs.com/package/statuspage.io
     if (bigMoney) {
       result.isBigMoney = (config.ConfigToml.bigMoney &&
         config.ConfigToml.bigMoney[name] &&

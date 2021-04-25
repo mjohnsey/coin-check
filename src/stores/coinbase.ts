@@ -2,7 +2,7 @@ import * as coinbase from 'coinbase-pro'
 import * as _ from 'lodash'
 
 export class CoinbaseStore {
-  public client: any
+  public client: coinbase.AuthenticatedClient
 
   constructor(key: string, passphrase: string, secret: string) {
     this.client = new coinbase.AuthenticatedClient(key, secret, passphrase)
@@ -10,6 +10,11 @@ export class CoinbaseStore {
 
   async getCoinbaseAccounts() {
     const accounts = await this.client.getCoinbaseAccounts()
+    return accounts
+  }
+
+  async getGdaxAccounts() {
+    const accounts = await this.client.getAccounts()
     return accounts
   }
 
