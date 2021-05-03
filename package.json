@@ -1,6 +1,6 @@
 {
   "name": "coin-check",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Michael Johnsey @mjohnsey",
   "bin": {
     "coin-check": "./bin/run"

@@ -19,7 +19,7 @@ $ npm install -g coin-check
 $ coin-check COMMAND
 running command...
 $ coin-check (-v|--version|version)
-coin-check/0.0.0 darwin-x64 node-v15.4.0
+coin-check/1.0.0 darwin-x64 node-v16.0.0
 $ coin-check --help [COMMAND]
 USAGE
   $ coin-check COMMAND
@@ -67,5 +67,5 @@ EXAMPLE
   {"balance":"495.6879068","usdBalance":140.4328451876012,"crypto":{"name":"XLM","symbol":""},"currentPrice":"0.283309"}
 ```
 
-_See code: [src/commands/price.ts](https://github.com/mjohnsey/coin-check/blob/v0.0.0/src/commands/price.ts)_
+_See code: [src/commands/price.ts](https://github.com/mjohnsey/coin-check/blob/v1.0.0/src/commands/price.ts)_
 <!-- commandsstop -->
